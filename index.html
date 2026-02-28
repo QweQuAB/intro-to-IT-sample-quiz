@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UCC · Units 1–3 · modular quiz (70 Q)</title>
+    <title>UCC · Units 1–3 · modular · shuffled answer keys</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
-        /* ----- STYLE MODULE (self-contained) ----- */
+        /* ----- STYLE MODULE (same as before) ----- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --bg-page: #f4f7fb; --card-bg: #ffffff; --primary: #1e3c5c; --primary-light: #2b4b6f;
@@ -99,13 +99,13 @@
 <div class="container">
     <div class="badge">COLLEGE OF DISTANCE EDUCATION · UCC</div>
     <h1>Introduction to Computing</h1>
-    <div class="subhead">🔹 Units 1–3 · 70 Q · modular design · easy updates</div>
+    <div class="subhead">🔹 Units 1–3 · 70 Q · randomized answer keys (A/B/C/D) · modular</div>
 
-    <!-- start screen (always visible initially) -->
+    <!-- start screen -->
     <div id="startScreen" class="card">
         <div class="start-screen">
             <h2 style="color: var(--primary);">📘 Units 1–3 exam drill</h2>
-            <p><strong>70 questions</strong> from Unit 1,2,3. Auto‑save, shuffle, references. Built with modules – fixes go to isolated components.</p>
+            <p><strong>70 questions</strong> – now with shuffled answer positions (correct answer not always 'A'). Auto‑save, references.</p>
             <div class="start-stats">
                 <div class="stat-item"><span class="stat-num">70</span><br>questions</div>
                 <div class="stat-item"><span class="stat-num">📄</span><br>references</div>
@@ -163,95 +163,118 @@
         </div>
         <div id="reviewContainer" style="margin-top: 30px;"></div>
     </div>
-    <div class="footer-note">modular: data / ui / state / storage</div>
+    <div class="footer-note">modular: answer keys randomized per question</div>
 </div>
 
 <script>
-// ==================== MODULE 1: QUESTION BANK (Units 1–3) ====================
-const questionBank = (function() {
-    const bank = [
-        // Unit 1 (20 items)
-        { topic: "U1/S1", q: "Which is NOT one of the five parts of an information system?", opts: ["data","procedures","people","networks"], ans: 3, exp: "Parts: people, hardware, software, procedures, data.", ref: "U1 S1 p.3" },
-        { topic: "U1/S1", q: "An information system includes people, hardware, software, ______, and data.", opts: ["procedures","networks","internet","cables"], ans: 0, exp: "Procedures are the methods to operate software.", ref: "U1 S1 p.3" },
-        { topic: "U1/S2", q: "A computer for one user at a time is a:", opts: ["server","mainframe","personal computer","supercomputer"], ans: 2, exp: "PC is single‑user.", ref: "U1 S2 p.5" },
-        { topic: "U1/S2", q: "Best for bulk data processing like censuses:", opts: ["laptop","mainframe","tablet","smartphone"], ans: 1, exp: "Mainframes handle large‑scale data.", ref: "U1 S2 p.6" },
-        { topic: "U1/S2", q: "Computer dedicated to serving a network:", opts: ["server","workstation","tablet","notebook"], ans: 0, exp: "Server provides services to network users.", ref: "U1 S2 p.6" },
-        { topic: "U1/S3", q: "Windows, Linux are examples of:", opts: ["application","operating systems","utilities","BIOS"], ans: 1, exp: "OS manages hardware, runs apps.", ref: "U1 S3 p.7" },
-        { topic: "U1/S3", q: "Primary function of an OS:", opts: ["word processing","managing computer activities","spreadsheets","graphics"], ans: 1, exp: "OS provides UI, runs apps, manages files.", ref: "U1 S3 p.7" },
-        { topic: "U1/S3", q: "Example of system software:", opts: ["Windows 10","Word","Excel","Photoshop"], ans: 0, exp: "Windows is an OS.", ref: "U1 S3 p.7" },
-        { topic: "U1/S3", q: "Utility software performs:", opts: ["backup","word processing","browsing","email"], ans: 0, exp: "Utilities: backup, virus protection.", ref: "U1 S3 p.8" },
-        { topic: "U1/S4", q: "Information processing cycle steps:", opts: ["input,processing,output,storage","fetch,decode,execute,store","edit,format,print,save","code,compile,run"], ans: 0, exp: "Input → processing → output → storage.", ref: "U1 S4 p.11" },
-        { topic: "U1/S4", q: "Smallest unit of data:", opts: ["bit","byte","KB","MB"], ans: 0, exp: "Bit = binary digit.", ref: "U1 S4 p.12" },
-        { topic: "U1/S4", q: "Approx bytes in a megabyte:", opts: ["one million","one thousand","one billion","one trillion"], ans: 0, exp: "1 MB ≈ 1 million bytes.", ref: "U1 S4 p.12" },
-        { topic: "U1/S4", q: "Which is an input device?", opts: ["keyboard","monitor","printer","speaker"], ans: 0, exp: "Keyboard inputs data.", ref: "U1 S4 p.12" },
-        { topic: "U1/S4", q: "Main circuit board inside computer:", opts: ["motherboard","CPU","RAM","power supply"], ans: 0, exp: "Motherboard holds CPU, memory.", ref: "U1 S4 p.13" },
-        { topic: "U1/S5", q: "Short‑range wireless alternative to Wi‑Fi:", opts: ["Bluetooth","Ethernet","Fiber","DSL"], ans: 0, exp: "Bluetooth range ~10 m.", ref: "U1 S5 p.15" },
-        { topic: "U1/S5", q: "Internet is based on:", opts: ["TCP/IP","Ethernet","ISP","BIOS"], ans: 0, exp: "Transmission Control Protocol/Internet Protocol.", ref: "U1 S5 p.15" },
-        { topic: "U1/S6", q: "First generation computers used:", opts: ["vacuum tubes","transistors","ICs","microprocessors"], ans: 0, exp: "1st gen: vacuum tubes.", ref: "U1 S6 p.17" },
-        { topic: "U1/S6", q: "Which generation introduced ICs?", opts: ["first","second","third","fourth"], ans: 2, exp: "Third generation (1965–79).", ref: "U1 S6 p.18" },
-        { topic: "U1/S6", q: "Second generation used:", opts: ["transistors","vacuum tubes","microprocessors","AI"], ans: 0, exp: "Transistors replaced tubes.", ref: "U1 S6 p.18" },
-        // Unit 2 (20 items)
-        { topic: "U2/S1", q: "Three main CPU components:", opts: ["control unit, ALU, registers","RAM,ROM,cache","cores,caches,BIOS","motherboard,chipset,bus"], ans: 0, exp: "Control unit, ALU, registers.", ref: "U2 S1 p.23" },
-        { topic: "U2/S1", q: "Machine cycle steps:", opts: ["fetch,decode,execute,store","input,output,processing","read,write,open,close","encode,decode,transmit"], ans: 0, exp: "Fetch → decode → execute → store.", ref: "U2 S1 p.23" },
-        { topic: "U2/S1", q: "CPU speed measured in:", opts: ["GHz","MB","bits","volts"], ans: 0, exp: "Gigahertz (billions of cycles/sec).", ref: "U2 S1 p.25" },
-        { topic: "U2/S1", q: "Multicore CPU means:", opts: ["multiple processors on one chip","multiple CPUs","more cache","faster RAM"], ans: 0, exp: "Multiple cores on single chip.", ref: "U2 S1 p.24" },
-        { topic: "U2/S2", q: "Which memory is volatile?", opts: ["RAM","ROM","flash","SSD"], ans: 0, exp: "RAM loses data when power off.", ref: "U2 S2 p.29" },
-        { topic: "U2/S2", q: "EEPROM stands for:", opts: ["Electrically Erasable Programmable ROM","Enhanced PROM","Erasable EPROM","External EPROM"], ans: 0, exp: "Electrically Erasable Programmable ROM.", ref: "U2 S2 p.29" },
-        { topic: "U2/S2", q: "Difference RAM/ROM:", opts: ["RAM volatile, ROM nonvolatile","RAM nonvolatile","both volatile","both nonvolatile"], ans: 0, exp: "RAM temporary, ROM permanent.", ref: "U2 S2 p.30" },
-        { topic: "U2/S1", q: "Cache memory is:", opts: ["small fast memory inside CPU","main memory","hard drive","optical"], ans: 0, exp: "Cache reduces latency.", ref: "U2 S1 p.24" },
-        { topic: "U2/S3", q: "Chipset function:", opts: ["directs bus traffic","stores data","converts AC to DC","manages power"], ans: 0, exp: "Chipset directs motherboard traffic.", ref: "U2 S3 p.31" },
-        { topic: "U2/S3", q: "PCI Express is a type of:", opts: ["expansion slot","memory","power connector","CPU socket"], ans: 0, exp: "PCIe connects expansion cards.", ref: "U2 S3 p.32" },
-        { topic: "U2/S3", q: "USB 3.0 speed up to:", opts: ["4 Gbps","480 Mbps","12 Mbps","1 Gbps"], ans: 0, exp: "USB 3.0 = 4 Gbps.", ref: "U2 S3 p.32" },
-        { topic: "U2/S4", q: "Two functions of power supply:", opts: ["convert AC to DC, step down voltage","generate AC, increase voltage","store energy","cool CPU"], ans: 0, exp: "Converts AC to DC and reduces voltage.", ref: "U2 S4 p.35" },
-        { topic: "U2/S4", q: "Colour wire for +12V?", opts: ["yellow","red","black","blue"], ans: 0, exp: "Yellow = +12V.", ref: "U2 S4 p.36" },
-        { topic: "U2/S5", q: "PC no signs of life, first check:", opts: ["power cord","monitor cable","keyboard","RAM"], ans: 0, exp: "Check electricity connection.", ref: "U2 S5 p.37" },
-        { topic: "U2/S5", q: "Multiple beeps at startup indicate:", opts: ["memory problem","CPU failure","hard drive error","monitor"], ans: 0, exp: "Beep codes often point to RAM.", ref: "U2 S5 p.37" },
-        { topic: "U2/S5", q: "'Non‑System Disk' error may mean:", opts: ["left USB drive inserted","hard drive full","keyboard error","monitor off"], ans: 0, exp: "System tries to boot from external drive.", ref: "U2 S5 p.38" },
-        { topic: "U2/S6", q: "Which is NOT system software?", opts: ["word processor","OS","device driver","BIOS"], ans: 0, exp: "Word processor is application.", ref: "U2 S6 p.41" },
-        { topic: "U2/S6", q: "Utility that guards against viruses:", opts: ["antivirus","backup","defrag","compression"], ans: 0, exp: "Antivirus protects against damaging programs.", ref: "U2 S6 p.43" },
-        // Unit 3 (20 items)
-        { topic: "U3/S1", q: "Tablets use ______ keyboards.", opts: ["virtual","ergonomic","mechanical","wireless"], ans: 0, exp: "Virtual (software) keyboard.", ref: "U3 S1 p.47" },
-        { topic: "U3/S1", q: "QWERTY refers to:", opts: ["keyboard layout","printer","mouse","network"], ans: 0, exp: "Standard English keyboard layout.", ref: "U3 S1 p.47" },
-        { topic: "U3/S2", q: "Which uses rubber ball?", opts: ["mechanical mouse","optical mouse","touchpad","stylus"], ans: 0, exp: "Mechanical mouse has rubber ball.", ref: "U3 S2 p.51" },
-        { topic: "U3/S2", q: "Fingerprint reader is a:", opts: ["biometric scanner","bar code reader","OCR","MICR"], ans: 0, exp: "Biometric scans body characteristic.", ref: "U3 S2 p.52" },
-        { topic: "U3/S2", q: "Captures still images and video:", opts: ["digital camera","printer","scanner","plotter"], ans: 0, exp: "Digital cameras capture both.", ref: "U3 S2 p.52" },
-        { topic: "U3/S3", q: "LCD stands for:", opts: ["Liquid Crystal Display","Light Crystal Diode","Liquid Colour","Light Cathode"], ans: 0, exp: "Liquid Crystal Display.", ref: "U3 S3 p.55" },
-        { topic: "U3/S3", q: "Printer that sprays liquid ink:", opts: ["inkjet","laser","dot matrix","thermal"], ans: 0, exp: "Inkjet uses nozzles.", ref: "U3 S3 p.56" },
-        { topic: "U3/S3", q: "Laser printer uses:", opts: ["toner and drum","ink cartridges","ribbon","thermal paper"], ans: 0, exp: "Laser uses toner, drum, fuser.", ref: "U3 S3 p.56" },
-        { topic: "U3/S3", q: "OLED stands for:", opts: ["Organic Light Emitting Diode","Optical LED","Output LED","Opaque LED"], ans: 0, exp: "Organic Light Emitting Diode.", ref: "U3 S3 p.55" },
-        { topic: "U3/S4", q: "Primary storage is:", opts: ["RAM","hard drive","SSD","DVD"], ans: 0, exp: "RAM = primary (temporary).", ref: "U3 S4 p.59" },
-        { topic: "U3/S4", q: "Example of secondary storage:", opts: ["hard disk drive","RAM","cache","register"], ans: 0, exp: "HDD is non‑volatile secondary.", ref: "U3 S4 p.59" },
-        { topic: "U3/S4", q: "HDD stands for:", opts: ["Hard Disk Drive","High Density Disc","Hybrid Digital","Hardware Data"], ans: 0, exp: "Hard Disk Drive.", ref: "U3 S4 p.60" },
-        { topic: "U3/S4", q: "Faster: SSD or HDD?", opts: ["SSD","HDD","same","depends"], ans: 0, exp: "SSD has no moving parts, much faster.", ref: "U3 S4 p.60" },
-        { topic: "U3/S5", q: "Amber monitor light but no display:", opts: ["no signal from computer","dead pixels","keyboard error","out of ink"], ans: 0, exp: "Monitor on but not receiving signal.", ref: "U3 S5 p.63" },
-        { topic: "U3/S5", q: "Clogged inkjet nozzle fix:", opts: ["run cleaning utility","shake","replace paper","update driver"], ans: 0, exp: "Printer's built‑in cleaning cycle.", ref: "U3 S5 p.64" },
-        { topic: "U3/S5", q: "Hard disk not recognized, first check:", opts: ["cable connectors","monitor cable","keyboard","printer"], ans: 0, exp: "Loose data/power cable common.", ref: "U3 S5 p.64" },
-        { topic: "U3/S6", q: "Brain of computer:", opts: ["CPU","RAM","motherboard","power supply"], ans: 0, exp: "CPU performs calculations.", ref: "U3 S6 p.69" },
-        { topic: "U3/S6", q: "NOT an input device:", opts: ["monitor","keyboard","mouse","scanner"], ans: 0, exp: "Monitor is output.", ref: "U3 S6 p.68" },
-        { topic: "U3/S6", q: "MICR stands for:", opts: ["Magnetic Ink Character Recognition","Magnetic Image","Memory Interface","Multipurpose Input"], ans: 0, exp: "Reads magnetic ink (cheques).", ref: "U3 S6 p.68" },
-        { topic: "U3/S6", q: "Plotter is an example of:", opts: ["output device","input device","storage","processing"], ans: 0, exp: "Plotter produces hard copy.", ref: "U3 S6 p.69" },
-    ];
-    // pad to 70
-    while (bank.length < 70) bank.push({ ...bank[bank.length % 56], q: bank[bank.length % 56].q + " (v)" });
-    return bank.slice(0,70);
-})();
+// ==================== MODULE 1: RAW QUESTION BANK (Units 1–3, without shuffled options) ====================
+const rawBank = [
+    // Unit 1 (20 items)
+    { topic: "U1/S1", q: "Which is NOT one of the five parts of an information system?", opts: ["data","procedures","people","networks"], correct: 3, exp: "Parts: people, hardware, software, procedures, data.", ref: "U1 S1 p.3" },
+    { topic: "U1/S1", q: "An information system includes people, hardware, software, ______, and data.", opts: ["procedures","networks","internet","cables"], correct: 0, exp: "Procedures are the methods to operate software.", ref: "U1 S1 p.3" },
+    { topic: "U1/S2", q: "A computer for one user at a time is a:", opts: ["server","mainframe","personal computer","supercomputer"], correct: 2, exp: "PC is single‑user.", ref: "U1 S2 p.5" },
+    { topic: "U1/S2", q: "Best for bulk data processing like censuses:", opts: ["laptop","mainframe","tablet","smartphone"], correct: 1, exp: "Mainframes handle large‑scale data.", ref: "U1 S2 p.6" },
+    { topic: "U1/S2", q: "Computer dedicated to serving a network:", opts: ["server","workstation","tablet","notebook"], correct: 0, exp: "Server provides services to network users.", ref: "U1 S2 p.6" },
+    { topic: "U1/S3", q: "Windows, Linux are examples of:", opts: ["application","operating systems","utilities","BIOS"], correct: 1, exp: "OS manages hardware, runs apps.", ref: "U1 S3 p.7" },
+    { topic: "U1/S3", q: "Primary function of an OS:", opts: ["word processing","managing computer activities","spreadsheets","graphics"], correct: 1, exp: "OS provides UI, runs apps, manages files.", ref: "U1 S3 p.7" },
+    { topic: "U1/S3", q: "Example of system software:", opts: ["Windows 10","Word","Excel","Photoshop"], correct: 0, exp: "Windows is an OS.", ref: "U1 S3 p.7" },
+    { topic: "U1/S3", q: "Utility software performs:", opts: ["backup","word processing","browsing","email"], correct: 0, exp: "Utilities: backup, virus protection.", ref: "U1 S3 p.8" },
+    { topic: "U1/S4", q: "Information processing cycle steps:", opts: ["input,processing,output,storage","fetch,decode,execute,store","edit,format,print,save","code,compile,run"], correct: 0, exp: "Input → processing → output → storage.", ref: "U1 S4 p.11" },
+    { topic: "U1/S4", q: "Smallest unit of data:", opts: ["bit","byte","KB","MB"], correct: 0, exp: "Bit = binary digit.", ref: "U1 S4 p.12" },
+    { topic: "U1/S4", q: "Approx bytes in a megabyte:", opts: ["one million","one thousand","one billion","one trillion"], correct: 0, exp: "1 MB ≈ 1 million bytes.", ref: "U1 S4 p.12" },
+    { topic: "U1/S4", q: "Which is an input device?", opts: ["keyboard","monitor","printer","speaker"], correct: 0, exp: "Keyboard inputs data.", ref: "U1 S4 p.12" },
+    { topic: "U1/S4", q: "Main circuit board inside computer:", opts: ["motherboard","CPU","RAM","power supply"], correct: 0, exp: "Motherboard holds CPU, memory.", ref: "U1 S4 p.13" },
+    { topic: "U1/S5", q: "Short‑range wireless alternative to Wi‑Fi:", opts: ["Bluetooth","Ethernet","Fiber","DSL"], correct: 0, exp: "Bluetooth range ~10 m.", ref: "U1 S5 p.15" },
+    { topic: "U1/S5", q: "Internet is based on:", opts: ["TCP/IP","Ethernet","ISP","BIOS"], correct: 0, exp: "Transmission Control Protocol/Internet Protocol.", ref: "U1 S5 p.15" },
+    { topic: "U1/S6", q: "First generation computers used:", opts: ["vacuum tubes","transistors","ICs","microprocessors"], correct: 0, exp: "1st gen: vacuum tubes.", ref: "U1 S6 p.17" },
+    { topic: "U1/S6", q: "Which generation introduced ICs?", opts: ["first","second","third","fourth"], correct: 2, exp: "Third generation (1965–79).", ref: "U1 S6 p.18" },
+    { topic: "U1/S6", q: "Second generation used:", opts: ["transistors","vacuum tubes","microprocessors","AI"], correct: 0, exp: "Transistors replaced tubes.", ref: "U1 S6 p.18" },
+    // Unit 2 (20 items)
+    { topic: "U2/S1", q: "Three main CPU components:", opts: ["control unit, ALU, registers","RAM,ROM,cache","cores,caches,BIOS","motherboard,chipset,bus"], correct: 0, exp: "Control unit, ALU, registers.", ref: "U2 S1 p.23" },
+    { topic: "U2/S1", q: "Machine cycle steps:", opts: ["fetch,decode,execute,store","input,output,processing","read,write,open,close","encode,decode,transmit"], correct: 0, exp: "Fetch → decode → execute → store.", ref: "U2 S1 p.23" },
+    { topic: "U2/S1", q: "CPU speed measured in:", opts: ["GHz","MB","bits","volts"], correct: 0, exp: "Gigahertz (billions of cycles/sec).", ref: "U2 S1 p.25" },
+    { topic: "U2/S1", q: "Multicore CPU means:", opts: ["multiple processors on one chip","multiple CPUs","more cache","faster RAM"], correct: 0, exp: "Multiple cores on single chip.", ref: "U2 S1 p.24" },
+    { topic: "U2/S2", q: "Which memory is volatile?", opts: ["RAM","ROM","flash","SSD"], correct: 0, exp: "RAM loses data when power off.", ref: "U2 S2 p.29" },
+    { topic: "U2/S2", q: "EEPROM stands for:", opts: ["Electrically Erasable Programmable ROM","Enhanced PROM","Erasable EPROM","External EPROM"], correct: 0, exp: "Electrically Erasable Programmable ROM.", ref: "U2 S2 p.29" },
+    { topic: "U2/S2", q: "Difference RAM/ROM:", opts: ["RAM volatile, ROM nonvolatile","RAM nonvolatile","both volatile","both nonvolatile"], correct: 0, exp: "RAM temporary, ROM permanent.", ref: "U2 S2 p.30" },
+    { topic: "U2/S1", q: "Cache memory is:", opts: ["small fast memory inside CPU","main memory","hard drive","optical"], correct: 0, exp: "Cache reduces latency.", ref: "U2 S1 p.24" },
+    { topic: "U2/S3", q: "Chipset function:", opts: ["directs bus traffic","stores data","converts AC to DC","manages power"], correct: 0, exp: "Chipset directs motherboard traffic.", ref: "U2 S3 p.31" },
+    { topic: "U2/S3", q: "PCI Express is a type of:", opts: ["expansion slot","memory","power connector","CPU socket"], correct: 0, exp: "PCIe connects expansion cards.", ref: "U2 S3 p.32" },
+    { topic: "U2/S3", q: "USB 3.0 speed up to:", opts: ["4 Gbps","480 Mbps","12 Mbps","1 Gbps"], correct: 0, exp: "USB 3.0 = 4 Gbps.", ref: "U2 S3 p.32" },
+    { topic: "U2/S4", q: "Two functions of power supply:", opts: ["convert AC to DC, step down voltage","generate AC, increase voltage","store energy","cool CPU"], correct: 0, exp: "Converts AC to DC and reduces voltage.", ref: "U2 S4 p.35" },
+    { topic: "U2/S4", q: "Colour wire for +12V?", opts: ["yellow","red","black","blue"], correct: 0, exp: "Yellow = +12V.", ref: "U2 S4 p.36" },
+    { topic: "U2/S5", q: "PC no signs of life, first check:", opts: ["power cord","monitor cable","keyboard","RAM"], correct: 0, exp: "Check electricity connection.", ref: "U2 S5 p.37" },
+    { topic: "U2/S5", q: "Multiple beeps at startup indicate:", opts: ["memory problem","CPU failure","hard drive error","monitor"], correct: 0, exp: "Beep codes often point to RAM.", ref: "U2 S5 p.37" },
+    { topic: "U2/S5", q: "'Non‑System Disk' error may mean:", opts: ["left USB drive inserted","hard drive full","keyboard error","monitor off"], correct: 0, exp: "System tries to boot from external drive.", ref: "U2 S5 p.38" },
+    { topic: "U2/S6", q: "Which is NOT system software?", opts: ["word processor","OS","device driver","BIOS"], correct: 0, exp: "Word processor is application.", ref: "U2 S6 p.41" },
+    { topic: "U2/S6", q: "Utility that guards against viruses:", opts: ["antivirus","backup","defrag","compression"], correct: 0, exp: "Antivirus protects against damaging programs.", ref: "U2 S6 p.43" },
+    // Unit 3 (20 items)
+    { topic: "U3/S1", q: "Tablets use ______ keyboards.", opts: ["virtual","ergonomic","mechanical","wireless"], correct: 0, exp: "Virtual (software) keyboard.", ref: "U3 S1 p.47" },
+    { topic: "U3/S1", q: "QWERTY refers to:", opts: ["keyboard layout","printer","mouse","network"], correct: 0, exp: "Standard English keyboard layout.", ref: "U3 S1 p.47" },
+    { topic: "U3/S2", q: "Which uses rubber ball?", opts: ["mechanical mouse","optical mouse","touchpad","stylus"], correct: 0, exp: "Mechanical mouse has rubber ball.", ref: "U3 S2 p.51" },
+    { topic: "U3/S2", q: "Fingerprint reader is a:", opts: ["biometric scanner","bar code reader","OCR","MICR"], correct: 0, exp: "Biometric scans body characteristic.", ref: "U3 S2 p.52" },
+    { topic: "U3/S2", q: "Captures still images and video:", opts: ["digital camera","printer","scanner","plotter"], correct: 0, exp: "Digital cameras capture both.", ref: "U3 S2 p.52" },
+    { topic: "U3/S3", q: "LCD stands for:", opts: ["Liquid Crystal Display","Light Crystal Diode","Liquid Colour","Light Cathode"], correct: 0, exp: "Liquid Crystal Display.", ref: "U3 S3 p.55" },
+    { topic: "U3/S3", q: "Printer that sprays liquid ink:", opts: ["inkjet","laser","dot matrix","thermal"], correct: 0, exp: "Inkjet uses nozzles.", ref: "U3 S3 p.56" },
+    { topic: "U3/S3", q: "Laser printer uses:", opts: ["toner and drum","ink cartridges","ribbon","thermal paper"], correct: 0, exp: "Laser uses toner, drum, fuser.", ref: "U3 S3 p.56" },
+    { topic: "U3/S3", q: "OLED stands for:", opts: ["Organic Light Emitting Diode","Optical LED","Output LED","Opaque LED"], correct: 0, exp: "Organic Light Emitting Diode.", ref: "U3 S3 p.55" },
+    { topic: "U3/S4", q: "Primary storage is:", opts: ["RAM","hard drive","SSD","DVD"], correct: 0, exp: "RAM = primary (temporary).", ref: "U3 S4 p.59" },
+    { topic: "U3/S4", q: "Example of secondary storage:", opts: ["hard disk drive","RAM","cache","register"], correct: 0, exp: "HDD is non‑volatile secondary.", ref: "U3 S4 p.59" },
+    { topic: "U3/S4", q: "HDD stands for:", opts: ["Hard Disk Drive","High Density Disc","Hybrid Digital","Hardware Data"], correct: 0, exp: "Hard Disk Drive.", ref: "U3 S4 p.60" },
+    { topic: "U3/S4", q: "Faster: SSD or HDD?", opts: ["SSD","HDD","same","depends"], correct: 0, exp: "SSD has no moving parts, much faster.", ref: "U3 S4 p.60" },
+    { topic: "U3/S5", q: "Amber monitor light but no display:", opts: ["no signal from computer","dead pixels","keyboard error","out of ink"], correct: 0, exp: "Monitor on but not receiving signal.", ref: "U3 S5 p.63" },
+    { topic: "U3/S5", q: "Clogged inkjet nozzle fix:", opts: ["run cleaning utility","shake","replace paper","update driver"], correct: 0, exp: "Printer's built‑in cleaning cycle.", ref: "U3 S5 p.64" },
+    { topic: "U3/S5", q: "Hard disk not recognized, first check:", opts: ["cable connectors","monitor cable","keyboard","printer"], correct: 0, exp: "Loose data/power cable common.", ref: "U3 S5 p.64" },
+    { topic: "U3/S6", q: "Brain of computer:", opts: ["CPU","RAM","motherboard","power supply"], correct: 0, exp: "CPU performs calculations.", ref: "U3 S6 p.69" },
+    { topic: "U3/S6", q: "NOT an input device:", opts: ["monitor","keyboard","mouse","scanner"], correct: 0, exp: "Monitor is output.", ref: "U3 S6 p.68" },
+    { topic: "U3/S6", q: "MICR stands for:", opts: ["Magnetic Ink Character Recognition","Magnetic Image","Memory Interface","Multipurpose Input"], correct: 0, exp: "Reads magnetic ink (cheques).", ref: "U3 S6 p.68" },
+    { topic: "U3/S6", q: "Plotter is an example of:", opts: ["output device","input device","storage","processing"], correct: 0, exp: "Plotter produces hard copy.", ref: "U3 S6 p.69" },
+];
+// pad to 70
+while (rawBank.length < 70) rawBank.push({ ...rawBank[rawBank.length % 56], q: rawBank[rawBank.length % 56].q + " (v)", correct: rawBank[rawBank.length % 56].correct });
+const baseRaw = rawBank.slice(0,70);
 
-// ==================== MODULE 2: STATE MANAGER ====================
+// ==================== MODULE 2: QUESTION SHUFFLER (randomizes option order and adjusts correct index) ====================
+function buildShuffledQuestionsFromRaw(rawArray) {
+    return rawArray.map(item => {
+        // create array of option objects with original text and a flag for correct
+        const optsWithIndex = item.opts.map((text, idx) => ({ text, isCorrect: idx === item.correct }));
+        // shuffle the array randomly
+        for (let i = optsWithIndex.length-1; i>0; i--) {
+            const j = Math.floor(Math.random()*(i+1));
+            [optsWithIndex[i], optsWithIndex[j]] = [optsWithIndex[j], optsWithIndex[i]];
+        }
+        const newOpts = optsWithIndex.map(o => o.text);
+        const newCorrect = optsWithIndex.findIndex(o => o.isCorrect);
+        return {
+            topic: item.topic,
+            q: item.q,
+            opts: newOpts,
+            ans: newCorrect,           // updated to shuffled position
+            exp: item.exp,
+            ref: item.ref
+        };
+    });
+}
+
+// ==================== MODULE 3: STATE MANAGER (uses shuffled questions) ====================
 const quizState = (function() {
-    let currentQuestions = [];
+    let currentQuestions = [];   // these are the fully shuffled (options + ans) versions
     let userAnswers = [];
     let answered = [];
     let score = 0;
     let currentIdx = 0;
     const letters = ['A','B','C','D'];
 
-    function shuffle(arr) {
+    function shuffleArray(arr) {
         for (let i = arr.length-1; i>0; i--) { const j = Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
         return arr;
     }
 
     function initNew() {
-        currentQuestions = shuffle([...questionBank]);
+        // take raw base, randomize option order per question, then shuffle question order
+        const withShuffledOptions = buildShuffledQuestionsFromRaw(baseRaw);
+        currentQuestions = shuffleArray(withShuffledOptions);
         userAnswers = new Array(70).fill(-1);
         answered = new Array(70).fill(false);
         score = 0;
@@ -285,16 +308,16 @@ const quizState = (function() {
     return { initNew, loadFromSaved, getCurrent, answerCurrent, moveTo, isAnswered, getUserAnswer, getScore, getQuestions, getState, resetFromBank, letters };
 })();
 
-// ==================== MODULE 3: STORAGE (localStorage) ====================
+// ==================== MODULE 4: STORAGE ====================
 const storageModule = (function() {
-    const KEY = 'ucc_modular_v1';
+    const KEY = 'ucc_modular_v2';
     function save(state) { localStorage.setItem(KEY, JSON.stringify(state)); }
     function load() { const raw = localStorage.getItem(KEY); return raw ? JSON.parse(raw) : null; }
     function clear() { localStorage.removeItem(KEY); }
     return { save, load, clear };
 })();
 
-// ==================== MODULE 4: UI RENDERER ====================
+// ==================== MODULE 5: UI RENDERER (identical to previous) ====================
 const uiRenderer = (function() {
     function showStart(resumeVisible) {
         document.getElementById('startScreen').style.display = 'block';
@@ -367,7 +390,7 @@ const uiRenderer = (function() {
     return { showStart, hideStart, renderQuestion, showResults };
 })();
 
-// ==================== MODULE 5: CONTROLLER ====================
+// ==================== MODULE 6: CONTROLLER ====================
 const quizController = (function() {
     function refreshUI() {
         const cur = quizState.getCurrent();
@@ -409,19 +432,17 @@ const quizController = (function() {
         const total = quizState.getQuestions().length;
         const score = quizState.getScore();
         const questions = quizState.getQuestions();
-        const userAnswers = quizState.getQuestions().map((_,i)=>quizState.getUserAnswer(i));
+        const userAnswers = questions.map((_,i)=>quizState.getUserAnswer(i));
         uiRenderer.showResults(score, total, questions, userAnswers, quizState.letters);
         storageModule.clear();
     }
 
     function restartAndShuffle() {
-        const fresh = quizState.resetFromBank();
-        quizState.loadFromSaved(fresh);
+        quizState.initNew();      // re‑shuffles both question order and options per question
         uiRenderer.hideStart();
         refreshUI();
     }
 
-    // check resume button on load
     function init() {
         const saved = storageModule.load();
         uiRenderer.showStart(!!saved);
@@ -430,7 +451,6 @@ const quizController = (function() {
     return { startNew, resume, handleAnswer, next, prev, restartAndShuffle, init };
 })();
 
-// ==================== START ====================
 window.onload = function() { quizController.init(); };
 </script>
 </body>
